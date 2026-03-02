@@ -87,7 +87,6 @@ class Command(BaseCommand):
                 user.save()
                 created += 1
 
-            # Для не-клиентов создаём дублирующую клиентскую учётку
             if role != CustomUser.ROLE_CLIENT:
                 local, domain = email.split("@", 1)
                 client_email = f"{local}_client@{domain}"

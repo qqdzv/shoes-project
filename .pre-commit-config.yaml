@@ -62,5 +62,3 @@ repos:
         language: system
         types: [yaml]
         stages: [pre-commit]
-
-
