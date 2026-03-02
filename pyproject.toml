@@ -1,12 +1,110 @@
 [project]
-name = "docker"
+name = "shoes-shop"
 version = "0.1.0"
-description = "Add your description here"
+description = "Shoe store management system for OOO Obuv"
 readme = "README.md"
-requires-python = ">=3.11.0"
+requires-python = ">=3.12.0"
 dependencies = [
-    "asyncpg>=0.31.0",
-    "fastapi>=0.134.0",
-    "pydantic-settings>=2.13.1",
-    "uvicorn[standard]>=0.41.0",
+    "django>=5.1.0",
+    "pillow>=10.0.0",
+    "openpyxl>=3.1.0",
+    "django-htmx>=1.21.0",
+    "psycopg[binary]>=3.1.0",
+    "pydantic-settings>=2.0.0",
 ]
+
+[tool.uv]
+dev-dependencies = [
+    "ruff>=0.15.4",
+    "ty>=0.0.19",
+    "django-stubs>=5.1.0",
+]
+
+[tool.ruff]
+line-length = 150
+
+exclude = [
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".ipynb_checkpoints",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pyenv",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".vscode",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "site-packages",
+    "venv",
+    ".venv",
+    "**/migrations/**",
+    "manage.py",
+    "**/commands/**",
+]
+
+[tool.ruff.lint]
+select = [
+    "ALL"
+]
+ignore = [
+    "D100",
+    "D101",
+    "D102",
+    "D103",
+    "D104",
+    "D105",
+    "D106",
+    "D107",
+    "D200",
+    "D203",
+    "D212",
+    "D415",
+    "ANN002",
+    "ANN003",
+    "ANN201",
+    "ANN202",
+    "ANN204",
+    "ANN401",
+    "RUF001",
+    "RUF002",
+    "RUF003",
+    "RUF006",
+    "RUF012",
+    "N815",
+    "TC001",
+    "PLR2004",
+    "TRY301",
+    "PGH003",
+    "BLE001",
+]
+
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "application",
+    "controllers",
+    "infrastructure",
+    "config",
+    "ioc",
+    "main",
+]
+
+[tool.ty.environment]
+python-version = "3.12"
+root = ["src"]
+
+[tool.ty.src]
+exclude = ["**/migrations/**"]

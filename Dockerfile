@@ -21,8 +21,9 @@ COPY --from=builder /.venv /.venv
 COPY --from=builder /app/src /app/src
 
 ENV PATH="/.venv/bin:$PATH" \
-    PYTHONPATH=/app/src
+    PYTHONPATH=/app/src \
+    DJANGO_SETTINGS_MODULE=config.settings
 
 WORKDIR /app/src
 
-CMD ["uvicorn", "--factory", "main:create_app", "--reload", "--host", "0.0.0.0", "--port", "80"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:80"]

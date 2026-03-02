@@ -1,0 +1,95 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  background-color: #FFFFFF;
+}
+
+.product-table {
+  font-size: 0.9rem;
+}
+
+.product-thumb {
+  width: 60px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #dee2e6;
+}
+
+.description-cell {
+  max-width: 220px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+.row-big-discount {
+  background-color: #2E8B57 !important;
+  color: #000;
+}
+.row-big-discount td {
+  color: #000;
+}
+.row-big-discount .badge {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.row-big-discount a.btn-outline-primary {
+  color: #000;
+  border-color: #000;
+}
+.row-big-discount a.btn-outline-danger {
+  color: #7b0000;
+  border-color: #7b0000;
+}
+.row-big-discount code {
+  color: #1a3d1a;
+}
+
+.current-photo-preview {
+  max-width: 300px;
+  max-height: 200px;
+  border: 1px solid #dee2e6;
+  border-radius: 6px;
+  display: block;
+}
+
+.card {
+  background-color: #7FFF00;
+}
+
+.btn-primary {
+  background-color: #00FA9A;
+  border-color: #00FA9A;
+  color: #000;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+  background-color: #00d488;
+  border-color: #00d488;
+  color: #000;
+}
+
+.btn-success {
+  background-color: #00FA9A;
+  border-color: #00FA9A;
+  color: #000;
+}
+
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active {
+  background-color: #00d488;
+  border-color: #00d488;
+  color: #000;
+}
+
+.navbar-brand img {
+  filter: brightness(1.1);
+}
+
+.order-item-row {
+  background-color: #f8f9fa;
+  border: 1px solid #e9ecef;
+}

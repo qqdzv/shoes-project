@@ -1,0 +1,66 @@
+{% load static %}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover align-middle">
+    <thead class="table-dark">
+      <tr>
+        <th>№ заказа</th>
+        <th>Артикулы / Товары</th>
+        <th>Дата заказа</th>
+        <th>Дата выдачи</th>
+        <th>Пункт выдачи</th>
+        <th>Клиент</th>
+        <th>Код получения</th>
+        <th>Статус</th>
+        {% if can_manage %}
+        <th style="width:120px">Действия</th>
+        {% endif %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for order in orders %}
+      <tr {% if can_manage %}style="cursor:pointer" onclick="window.location='{% url 'orders:order_edit' order.order_number %}'"{% endif %}>
+        <td class="fw-bold">{{ order.order_number }}</td>
+        <td>
+          {% for item in order.items.all %}
+          <span class="badge bg-secondary me-1">{{ item.product.article }} × {{ item.quantity }}</span>
+          {% empty %}
+          <span class="text-muted">—</span>
+          {% endfor %}
+        </td>
+        <td>{{ order.order_date|date:"d.m.Y" }}</td>
+        <td>{% if order.delivery_date %}{{ order.delivery_date|date:"d.m.Y" }}{% else %}—{% endif %}</td>
+        <td class="small">{{ order.pickup_point }}</td>
+        <td>{{ order.client }}</td>
+        <td class="text-center"><code>{{ order.pickup_code }}</code></td>
+        <td>
+          <span class="badge
+            {% if order.status == 'completed' %}bg-success
+            {% elif order.status == 'new' %}bg-primary
+            {% elif order.status == 'processing' %}bg-warning text-dark
+            {% else %}bg-danger{% endif %}">
+            {{ order.get_status_display }}
+          </span>
+        </td>
+        {% if can_manage %}
+        <td>
+          <a href="{% url 'orders:order_edit' order.order_number %}" class="btn btn-sm btn-outline-primary" title="Редактировать">
+            <i class="bi bi-pencil"></i>
+          </a>
+          <a href="{% url 'orders:order_delete' order.order_number %}" class="btn btn-sm btn-outline-danger" title="Удалить">
+            <i class="bi bi-trash"></i>
+          </a>
+        </td>
+        {% endif %}
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="{% if can_manage %}9{% else %}8{% endif %}" class="text-center text-muted py-4">
+          <i class="bi bi-inbox fs-3 d-block mb-2"></i>
+          Заказы не найдены
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<div class="text-muted small">Всего заказов: <strong>{{ orders|length }}</strong></div>

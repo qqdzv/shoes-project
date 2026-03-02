@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Удаление заказа — ООО «Обувь»{% endblock %}
+{% block nav_orders %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card border-danger shadow-sm">
+      <div class="card-header bg-danger text-white">
+        <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> Подтверждение удаления</h5>
+      </div>
+      <div class="card-body p-4">
+        <p class="fs-5">Вы действительно хотите удалить заказ?</p>
+        <div class="bg-light rounded p-3 mb-4">
+          <table class="table table-sm mb-0">
+            <tr><th>Номер заказа:</th><td>{{ order.order_number }}</td></tr>
+            <tr><th>Клиент:</th><td>{{ order.client_name }}</td></tr>
+            <tr><th>Дата:</th><td>{{ order.order_date|date:"d.m.Y" }}</td></tr>
+            <tr><th>Статус:</th><td>{{ order.get_status_display }}</td></tr>
+          </table>
+        </div>
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <strong>Внимание!</strong> Это действие необратимо. Все позиции заказа также будут удалены.
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-trash-fill"></i> Да, удалить
+            </button>
+            <a href="{% url 'orders:order_list' %}" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left"></i> Отмена
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

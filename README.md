@@ -1,1 +1,0 @@
-Имадж в реестре: https://hub.docker.com/repository/docker/dzvqk/3-akg/general

@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Удаление товара — ООО «Обувь»{% endblock %}
+{% block nav_catalog %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card border-danger shadow-sm">
+      <div class="card-header bg-danger text-white">
+        <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill"></i> Подтверждение удаления</h5>
+      </div>
+      <div class="card-body p-4">
+        <p class="fs-5">Вы действительно хотите удалить товар?</p>
+        <div class="bg-light rounded p-3 mb-4">
+          <table class="table table-sm mb-0">
+            <tr><th>Артикул:</th><td><code>{{ product.article }}</code></td></tr>
+            <tr><th>Наименование:</th><td>{{ product.name }}</td></tr>
+            <tr><th>Категория:</th><td>{{ product.category }}</td></tr>
+            <tr><th>Цена:</th><td>{{ product.price }} ₽</td></tr>
+          </table>
+        </div>
+        <div class="alert alert-warning">
+          <i class="bi bi-exclamation-triangle-fill"></i>
+          <strong>Внимание!</strong> Это действие необратимо. Товар будет удалён из базы данных вместе с фотографией.
+          Удаление невозможно, если товар присутствует в заказах.
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-danger">
+              <i class="bi bi-trash-fill"></i> Да, удалить
+            </button>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary">
+              <i class="bi bi-arrow-left"></i> Отмена
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

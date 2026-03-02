@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if is_edit %}Редактирование заказа{% else %}Добавление заказа{% endif %} — ООО «Обувь»{% endblock %}
+{% block nav_orders %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-9">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <a href="{% url 'orders:order_list' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Назад
+      </a>
+      <h2 class="mb-0">
+        {% if is_edit %}
+        <i class="bi bi-pencil-square"></i> Редактирование заказа №{{ order.order_number }}
+        {% else %}
+        <i class="bi bi-plus-circle"></i> Добавление заказа
+        {% endif %}
+      </h2>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <form method="post" novalidate>
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            <i class="bi bi-x-circle-fill"></i>
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">
+                {{ form.order_number.label }}
+                {% if is_edit %}<span class="badge bg-secondary">только чтение</span>{% endif %}
+              </label>
+              {{ form.order_number }}
+              {% if form.order_number.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.order_number.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">{{ form.status.label }}</label>
+              {{ form.status }}
+              {% if form.status.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.status.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-12">
+              <label class="form-label fw-semibold">{{ form.pickup_point.label }}</label>
+              {{ form.pickup_point }}
+              {% if form.pickup_point.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.pickup_point.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">{{ form.order_date.label }}</label>
+              {{ form.order_date }}
+              {% if form.order_date.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.order_date.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">{{ form.delivery_date.label }}</label>
+              {{ form.delivery_date }}
+              {% if form.delivery_date.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.delivery_date.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">{{ form.pickup_code.label }}</label>
+              {{ form.pickup_code }}
+              {% if form.pickup_code.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.pickup_code.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-8">
+              <label class="form-label fw-semibold">{{ form.client.label }}</label>
+              {{ form.client }}
+              {% if form.client.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.client.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <hr class="my-4">
+          <h5><i class="bi bi-cart"></i> Позиции заказа</h5>
+
+          {{ formset.management_form }}
+          {% if formset.non_form_errors %}
+          <div class="alert alert-danger">
+            {% for error in formset.non_form_errors %}{{ error }}{% endfor %}
+          </div>
+          {% endif %}
+
+          <div id="order-items-container">
+            {% for item_form in formset %}
+            <div class="order-item-row card mb-2">
+              <div class="card-body py-2">
+                {{ item_form.id }}
+                <div class="row g-2 align-items-end">
+                  <div class="col-md-7">
+                    <label class="form-label mb-1 small">{{ item_form.product.label }}</label>
+                    {{ item_form.product }}
+                    {% if item_form.product.errors %}
+                    <div class="text-danger small">{{ item_form.product.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-3">
+                    <label class="form-label mb-1 small">{{ item_form.quantity.label }}</label>
+                    {{ item_form.quantity }}
+                    {% if item_form.quantity.errors %}
+                    <div class="text-danger small">{{ item_form.quantity.errors.0 }}</div>
+                    {% endif %}
+                  </div>
+                  <div class="col-md-2">
+                    {% if item_form.DELETE %}
+                    <div class="form-check mt-3">
+                      {{ item_form.DELETE }}
+                      <label class="form-check-label text-danger small" for="{{ item_form.DELETE.id_for_label }}">
+                        Удалить
+                      </label>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <hr class="my-4">
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-save"></i>
+              {% if is_edit %}Сохранить изменения{% else %}Добавить заказ{% endif %}
+            </button>
+            <a href="{% url 'orders:order_list' %}" class="btn btn-outline-secondary">
+              <i class="bi bi-x-lg"></i> Отмена
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

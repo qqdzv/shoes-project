@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if is_edit %}Редактирование товара{% else %}Добавление товара{% endif %} — ООО «Обувь»{% endblock %}
+{% block nav_catalog %}active{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="d-flex align-items-center gap-3 mb-4">
+      <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary btn-sm">
+        <i class="bi bi-arrow-left"></i> Назад
+      </a>
+      <h2 class="mb-0">
+        {% if is_edit %}
+        <i class="bi bi-pencil-square"></i> Редактирование товара
+        {% if product %}<span class="text-muted fs-5">— {{ product.name }}</span>{% endif %}
+        {% else %}
+        <i class="bi bi-plus-circle"></i> Добавление товара
+        {% endif %}
+      </h2>
+    </div>
+
+    <div class="card shadow-sm">
+      <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data" novalidate>
+          {% csrf_token %}
+
+          {% if form.non_field_errors %}
+          <div class="alert alert-danger">
+            <i class="bi bi-x-circle-fill"></i>
+            {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+          </div>
+          {% endif %}
+
+          <div class="row g-3">
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">{{ form.article.label }}
+                {% if is_edit %}<span class="badge bg-secondary">только чтение</span>{% endif %}
+              </label>
+              {{ form.article }}
+              {% if form.article.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.article.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-8">
+              <label class="form-label fw-semibold">{{ form.name.label }}</label>
+              {{ form.name }}
+              {% if form.name.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.name.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ form.category.label }}</label>
+              {{ form.category }}
+              {% if form.category.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.category.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ form.manufacturer.label }}</label>
+              {{ form.manufacturer }}
+              {% if form.manufacturer.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.manufacturer.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label fw-semibold">{{ form.supplier.label }}</label>
+              {{ form.supplier }}
+              {% if form.supplier.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.supplier.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">{{ form.unit.label }}</label>
+              {{ form.unit }}
+              {% if form.unit.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.unit.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label fw-semibold">{{ form.price.label }}</label>
+              <div class="input-group">
+                {{ form.price }}
+                <span class="input-group-text">₽</span>
+              </div>
+              {% if form.price.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.price.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">{{ form.discount.label }}</label>
+              <div class="input-group">
+                {{ form.discount }}
+                <span class="input-group-text">%</span>
+              </div>
+              {% if form.discount.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.discount.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-md-3">
+              <label class="form-label fw-semibold">{{ form.stock_quantity.label }}</label>
+              {{ form.stock_quantity }}
+              {% if form.stock_quantity.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.stock_quantity.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ form.description.label }}</label>
+              {{ form.description }}
+              {% if form.description.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.description.errors.0 }}</div>
+              {% endif %}
+            </div>
+
+            <div class="col-12">
+              <label class="form-label fw-semibold">{{ form.photo.label }}</label>
+              {% if is_edit and product and product.photo %}
+              <div class="mb-2">
+                <img src="{{ product.photo.url }}" alt="Текущее фото" class="current-photo-preview">
+                <p class="text-muted small mt-1">Текущее фото. Загрузите новое, чтобы заменить (старое будет удалено).</p>
+              </div>
+              {% elif is_edit %}
+              <div class="mb-2">
+                <img src="{% static 'img/picture.png' %}" alt="Нет фото" class="current-photo-preview">
+                <p class="text-muted small mt-1">Фото отсутствует.</p>
+              </div>
+              {% endif %}
+              {{ form.photo }}
+              <div class="form-text">Максимальный размер: 300×200 пикселей. Изображение будет автоматически масштабировано.</div>
+              {% if form.photo.errors %}
+              <div class="text-danger small mt-1"><i class="bi bi-exclamation-circle"></i> {{ form.photo.errors.0 }}</div>
+              {% endif %}
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-primary">
+              <i class="bi bi-save"></i>
+              {% if is_edit %}Сохранить изменения{% else %}Добавить товар{% endif %}
+            </button>
+            <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-secondary">
+              <i class="bi bi-x-lg"></i> Отмена
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
