@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
-{% block title %}Удаление заказа — ООО «Обувь»{% endblock %}
-{% block nav_orders %}active{% endblock %}
+{% block title %}Удаление заказа — ООО «Обувь»{% endblock title %}
+{% block nav_orders %}active{% endblock nav_orders %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -15,7 +15,7 @@
         <div class="bg-light rounded p-3 mb-4">
           <table class="table table-sm mb-0">
             <tr><th>Номер заказа:</th><td>{{ order.order_number }}</td></tr>
-            <tr><th>Клиент:</th><td>{{ order.client_name }}</td></tr>
+            <tr><th>Клиент:</th><td>{{ order.client }}</td></tr>
             <tr><th>Дата:</th><td>{{ order.order_date|date:"d.m.Y" }}</td></tr>
             <tr><th>Статус:</th><td>{{ order.get_status_display }}</td></tr>
           </table>
@@ -39,4 +39,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock content %}

@@ -28,7 +28,6 @@ def _get_filtered_orders(request: HttpRequest) -> QuerySet[Order]:
 
 
 class OrderListView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         if not request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -52,7 +51,6 @@ class OrderListView(LoginRequiredMixin, View):
 
 
 class OrderCreateView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         if not request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -86,7 +84,6 @@ class OrderCreateView(LoginRequiredMixin, View):
 
 
 class OrderEditView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         if not request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)
@@ -121,7 +118,6 @@ class OrderEditView(LoginRequiredMixin, View):
 
 
 class OrderDeleteView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         if not request.user.is_authenticated:
             return super().dispatch(request, *args, **kwargs)

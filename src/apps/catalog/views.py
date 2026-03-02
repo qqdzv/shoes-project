@@ -46,7 +46,6 @@ def _get_filtered_products(request: HttpRequest) -> QuerySet[Product]:
 
 
 class ProductListView(View):
-
     def get(self, request: HttpRequest) -> HttpResponse:
         request.session.pop(_EDIT_LOCK_KEY, None)
         r: AppRequest = request  # type: ignore[assignment]
@@ -80,7 +79,6 @@ class ProductListView(View):
 
 
 class ProductCreateView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         r: AppRequest = request  # type: ignore[assignment]
         if not r.user.is_admin:
@@ -104,7 +102,6 @@ class ProductCreateView(LoginRequiredMixin, View):
 
 
 class ProductEditView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         r: AppRequest = request  # type: ignore[assignment]
         if not r.user.is_admin:
@@ -147,7 +144,6 @@ class ProductEditView(LoginRequiredMixin, View):
 
 
 class ProductDeleteView(LoginRequiredMixin, View):
-
     def dispatch(self, request: HttpRequest, *args, **kwargs) -> HttpResponseBase:
         r: AppRequest = request  # type: ignore[assignment]
         if not r.user.is_admin:

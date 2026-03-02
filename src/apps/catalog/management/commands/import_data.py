@@ -44,7 +44,7 @@ class Command(BaseCommand):
         if CustomUser.objects.filter(email=email).exists():
             print("  Суперпользователь уже существует, пропускаем.")
             return
-        CustomUser.objects.create_superuser(email=email, password="admin", full_name="Admin")
+        CustomUser.objects.create_superuser(email=email, password="admin", full_name="Admin")  # nosec B106  # pragma: allowlist secret
         print(f"  Создан суперпользователь: {email} / admin")
 
     def _open_xlsx(self, filename: str) -> list:

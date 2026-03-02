@@ -6,7 +6,9 @@ from apps.catalog.models import Product
 
 class PickupPoint(models.Model):
     address = models.CharField(
-        max_length=300, unique=True, verbose_name="Адрес",
+        max_length=300,
+        unique=True,
+        verbose_name="Адрес",
     )
 
     class Meta:
@@ -32,11 +34,14 @@ class Order(models.Model):
     ]
 
     order_number = models.PositiveIntegerField(
-        primary_key=True, verbose_name="Номер заказа",
+        primary_key=True,
+        verbose_name="Номер заказа",
     )
     order_date = models.DateField(verbose_name="Дата заказа")
     delivery_date = models.DateField(
-        null=True, blank=True, verbose_name="Дата выдачи",
+        null=True,
+        blank=True,
+        verbose_name="Дата выдачи",
     )
     pickup_point = models.ForeignKey(
         PickupPoint,

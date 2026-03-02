@@ -1,6 +1,5 @@
 name: shoes-shop
 
-
 services:
   postgres:
     image: postgres:17
@@ -17,7 +16,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES__USER} -d ${POSTGRES__NAME}"]
+      test:
+        - CMD-SHELL
+        - "pg_isready -U ${POSTGRES__USER} -d ${POSTGRES__NAME}"
       interval: 10s
       timeout: 5s
       retries: 5
@@ -38,8 +39,12 @@ services:
             python manage.py import_data &&
             python manage.py runserver 0.0.0.0:80"
     healthcheck:
-      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:80/admin/login/')"]
-      interval: 30s
+      test:
+        - CMD
+        - python3
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:80/admin/login/')"  # yamllint disable-line rule:line-length
+      interval: 5s
       timeout: 5s
       retries: 3
       start_period: 5s

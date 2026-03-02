@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}{% if is_edit %}Редактирование товара{% else %}Добавление товара{% endif %} — ООО «Обувь»{% endblock %}
-{% block nav_catalog %}active{% endblock %}
+{% block title %}{% if is_edit %}Редактирование товара{% else %}Добавление товара{% endif %} — ООО «Обувь»{% endblock title %}
+{% block nav_catalog %}active{% endblock nav_catalog %}
 
 {% block content %}
 <div class="row justify-content-center">
@@ -159,4 +159,4 @@
     </div>
   </div>
 </div>
-{% endblock %}
+{% endblock content %}

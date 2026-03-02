@@ -42,7 +42,9 @@ class Manufacturer(models.Model):
 
 class Product(models.Model):
     article = models.CharField(
-        max_length=20, primary_key=True, verbose_name="Артикул",
+        max_length=20,
+        primary_key=True,
+        verbose_name="Артикул",
     )
     name = models.CharField(max_length=200, verbose_name="Наименование")
     unit = models.CharField(max_length=20, verbose_name="Единица измерения")

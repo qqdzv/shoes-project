@@ -1,0 +1,66 @@
+repos:
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff-linter
+        entry: uv run ruff check --fix
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: ruff-format
+        name: ruff-formatter
+        entry: uv run ruff format
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: ty-check
+        name: ty-type-checker
+        entry: uv run ty check
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: bandit-check
+        name: bandit-checker
+        entry: uv run bandit -c pyproject.toml -r src/
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: pip-audit-check
+        name: pip-audit-checker
+        entry: uv run pip-audit
+        language: system
+        types: [python]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: djlint-check
+        name: djlint-template-linter
+        entry: uv run djlint src/templates/ --lint
+        language: system
+        types: [html]
+        pass_filenames: false
+        stages: [pre-commit]
+
+      - id: detect-secrets
+        name: detect-secrets
+        entry: uv run detect-secrets scan src/
+        language: system
+        pass_filenames: true
+        stages: [pre-commit]
+
+      - id: yamllint-check
+        name: yamllint-checker
+        entry: uv run yamllint
+        language: system
+        types: [yaml]
+        stages: [pre-commit]
+
+
